@@ -26,7 +26,6 @@ def plot(data, labels):
 
 @cuda.jit()
 def DBSCAN_kernel(n_neighborhoods, core_samples, labels):
-    #pos = cuda.grid(1)
     label_num = 0
     for pos in range(labels.shape[0]):
         if labels[pos] == -1 and core_samples[pos]:
@@ -74,4 +73,3 @@ DBSCAN_kernel[blockspergrid, threadsperblock](n_neighborhoods, core_samples, d_l
 
 result = d_labels.copy_to_host()
 print(result)
-plot(data, result)
